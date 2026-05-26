@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>重要なお知らせ | komai home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Shippori+Mincho:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ivory: #F8F5EF;
+    --warm-white: #FDFCFA;
+    --ink: #1A1714;
+    --ink-mid: #3D3830;
+    --ink-light: #7A7060;
+    --ink-muted: #B0A898;
+    --gold: #A8925A;
+    --gold-light: #C4AE78;
+    --gold-pale: #F0E8D5;
+    --rule: rgba(26,23,20,0.12);
+    --text-start: 10vh;
+  }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--ink);
+  }
+
+  #slider {
+    display: flex;
+    width: 600vw;
+    height: 100vh;
+    transition: transform 0.75s cubic-bezier(0.77, 0, 0.175, 1);
+    will-change: transform;
+  }
+
+  /* ── PAGE ── */
+  .page {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background: var(--ivory);
+  }
+  .page:nth-child(even) { background: var(--warm-white); }
+
+  /* ── RIGHT IMAGE PANEL (1/3) ── */
+  .page-img {
+    position: absolute;
+    top: 0; right: 0;
+    width: 36%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+  }
+
+  /* gradient from bg color into image */
+  .page-img::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, var(--page-bg, #F8F5EF) 0%, transparent 55%);
+    z-index: 2;
+  }
+
+  /* each page bg colour reflected */
+  .page:nth-child(odd)  .page-img { --page-bg: #F8F5EF; }
+  .page:nth-child(even) .page-img { --page-bg: #FDFCFA; }
+
+  /* ── TEXT CONTENT ── */
+  .page-inner {
+    position: relative;
+    z-index: 10;
+    width: min(580px, 62vw);
+    margin-left: max(5vw, 3rem);
+    padding-top: var(--text-start);
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  /* text shadow for readability */
+  .page-inner * {
+    text-shadow: 0 1px 12px rgba(248,245,239,0.7), 0 0 30px rgba(248,245,239,0.5);
+  }
+  .page:nth-child(even) .page-inner * {
+    text-shadow: 0 1px 12px rgba(253,252,250,0.7), 0 0 30px rgba(253,252,250,0.5);
+  }
+
+  /* vertical gold rule */
+  .page-inner::before {
+    content: '';
+    position: absolute;
+    left: -2.5rem;
+    top: var(--text-start);
+    height: 60%;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    opacity: 0.6;
+  }
+
+  /* page number */
+  .pg-num {
+    position: absolute;
+    right: -2rem;
+    top: var(--text-start);
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(9px, 1.2vmin, 12px);
+    letter-spacing: 0.15em;
+    color: var(--ink-muted);
+    writing-mode: vertical-rl;
+    text-shadow: none !important;
+  }
+
+  /* ── TYPOGRAPHY ── */
+  /*
+   * vmin = shorter side of the viewport.
+   * Using vmin as the fluid unit means the text scales
+   * proportionally on any device/orientation.
+   */
+  .label {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(9px, 1.2vmin, 13px);
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(1.1rem, 3.5vmin, 2.1rem);
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.6;
+    letter-spacing: 0.05em;
+  }
+
+  h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(0.95rem, 2.8vmin, 1.5rem);
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.7;
+    letter-spacing: 0.05em;
+  }
+
+  .eyebrow {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(0.7rem, 1.6vmin, 0.95rem);
+    color: var(--ink-light);
+    letter-spacing: 0.2em;
+  }
+
+  p {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(0.8rem, 1.8vmin, 1rem);
+    line-height: 2.2;
+    color: var(--ink-mid);
+    letter-spacing: 0.05em;
+  }
+
+  .rule-line {
+    width: 3rem;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .p1-accent {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(0.7rem, 1.5vmin, 0.9rem);
+    color: var(--ink-light);
+    letter-spacing: 0.1em;
+    line-height: 2.2;
+  }
+
+  .num-badge {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(2rem, 5vmin, 3.5rem);
+    font-weight: 700;
+    color: var(--gold-pale);
+    line-height: 1;
+    position: absolute;
+    right: 0;
+    top: var(--text-start);
+    text-shadow: none !important;
+  }
+
+  .sig-block {
+    border-top: 1px solid var(--rule);
+    padding-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .sig-name {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(0.9rem, 2.2vmin, 1.2rem);
+    color: var(--ink);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+  }
+
+  .sig-meta {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(0.75rem, 1.6vmin, 0.9rem);
+    color: var(--ink-light);
+    letter-spacing: 0.15em;
+  }
+
+  /* ── FOOTER ── */
+  #footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 8px 0 10px;
+    z-index: 100;
+    background: rgba(26,23,20,0.72);
+    pointer-events: none;
+  }
+
+  .footer-dots {
+    display: flex;
+    gap: 9px;
+    pointer-events: all;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+    border: none;
+    padding: 0;
+  }
+  .dot.active { background: var(--gold-light); transform: scale(1.4); }
+  .dot:hover:not(.active) { background: rgba(255,255,255,0.6); }
+
+  .footer-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    pointer-events: all;
+  }
+
+  .footer-brand {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(8px, 1.3vmin, 11px);
+    letter-spacing: 0.3em;
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-brand:hover { color: var(--gold-light); }
+
+  .footer-sep { display: none; }
+
+  .footer-pp {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(8px, 1.3vmin, 11px);
+    letter-spacing: 0.18em;
+    color: rgba(255,255,255,0.4);
+    pointer-events: all;
+    cursor: pointer;
+    background: none;
+    border: none;
+    transition: color 0.2s;
+  }
+  .footer-pp:hover { color: rgba(255,255,255,0.75); }
+
+  /* ── PROGRESS ── */
+  #progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: var(--gold);
+    transition: width 0.75s cubic-bezier(0.77, 0, 0.175, 1);
+    z-index: 150;
+  }
+
+  /* ── ENTER ANIMATION ── */
+  .page-inner { opacity: 0; transform: translateY(16px); transition: opacity 0.65s ease 0.15s, transform 0.65s ease 0.15s; }
+  .page.visible .page-inner { opacity: 1; transform: translateY(0); }
+
+  /* ── MODAL ── */
+  #modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(26,23,20,0.7);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+  #modal-overlay.open { display: flex; }
+
+  #modal {
+    background: var(--warm-white);
+    width: min(560px, 90vw);
+    max-height: 80vh;
+    overflow-y: auto;
+    border-radius: 2px;
+    padding: 3rem;
+    position: relative;
+  }
+
+  #modal h3 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  #modal p {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.875rem;
+    line-height: 2;
+    color: var(--ink-mid);
+    margin-bottom: 1rem;
+  }
+
+  #modal-close {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--ink-light);
+    font-size: 1.25rem;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+  #modal-close:hover { color: var(--ink); }
+
+  @media (max-width: 680px) {
+    .page-inner { width: 80vw; margin-left: 6vw; }
+    .page-img { width: 45%; }
+    .page-inner::before { left: -1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<div id="slider">
+
+  <!-- PAGE 1 -->
+  <section class="page" data-page="0">
+    <div class="page-img" style="background-image: url('https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80');"></div>
+    <div class="page-inner">
+      <span class="pg-num">01 / 06</span>
+      <span class="label">Important Notice</span>
+      <div class="rule-line"></div>
+      <h1>重要なお知らせ</h1>
+      <p class="p1-accent">資材価格高騰・納期遅延に対する<br>弊社の取り組みについて</p>
+    </div>
+  </section>
+
+  <!-- PAGE 2 -->
+  <section class="page" data-page="1">
+    <div class="page-img" style="background-image: url('https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80');"></div>
+    <div class="page-inner">
+      <span class="pg-num">02 / 06</span>
+      <span class="eyebrow">ごあいさつ</span>
+      <div class="rule-line"></div>
+      <p>平素より、株式会社こまいホームをご愛顧いただき、誠にありがとうございます。</p>
+      <p>昨今の世界情勢による資材価格の高騰や物流の混乱に伴う納期遅延が、住宅業界全体に深刻な影響を及ぼしております。このような状況の中、弊社ではお客様の安心と信頼を最優先に考え、下記のとおり対応方針を定めました。お客様へ真摯にご説明申し上げます。</p>
+    </div>
+  </section>
+
+  <!-- PAGE 3 -->
+  <section class="page" data-page="2">
+    <div class="page-img" style="background-image: url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80');"></div>
+    <div class="page-inner">
+      <span class="pg-num">03 / 06</span>
+      <span class="num-badge" aria-hidden="true">01</span>
+      <span class="label">お約束</span>
+      <div class="rule-line"></div>
+      <h2>追加請求はいたしません</h2>
+      <p>ご契約後に資材等の価格が高騰した場合であっても、その差額をお客様に追加でご請求することは一切ございません。ご契約時にお示しした金額を誠実に守り、安心してお任せいただける家づくりをお約束いたします。</p>
+    </div>
+  </section>
+
+  <!-- PAGE 4 -->
+  <section class="page" data-page="3">
+    <div class="page-img" style="background-image: url('https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=800&q=80');"></div>
+    <div class="page-inner">
+      <span class="pg-num">04 / 06</span>
+      <span class="num-badge" aria-hidden="true">02</span>
+      <span class="label">お約束</span>
+      <div class="rule-line"></div>
+      <h2>地域に寄り添った家づくり</h2>
+      <p>私たちは、地域とそこに住まわれるお客様に寄り添った家づくりを大切にしています。価格変動の影響があるなかでも、品質・誠実さ・地域への貢献という弊社の根本姿勢は変わりません。これからもお客様一人ひとりに真摯に向き合ってまいります。</p>
+    </div>
+  </section>
+
+  <!-- PAGE 5 -->
+  <section class="page" data-page="4">
+    <div class="page-img" style="background-image: url('https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=80');"></div>
+    <div class="page-inner">
+      <span class="pg-num">05 / 06</span>
+      <span class="num-badge" aria-hidden="true">03</span>
+      <span class="label">お願い</span>
+      <div class="rule-line"></div>
+      <h2>工期・仕様変更のご相談</h2>
+      <p>誠に恐れ入りますが、工期の長期化や、一部の商品・仕様において入荷が非常に困難な状況が生じた場合には、代替品や仕様変更についてお客様にご相談をさせていただく場合がございます。</p>
+      <p>その際は、弊社担当者よりできる限り早期にご連絡・ご説明を申し上げます。何卒ご理解のほど、よろしくお願い申し上げます。</p>
+    </div>
+  </section>
+
+  <!-- PAGE 6 -->
+  <section class="page" data-page="5">
+    <div class="page-img" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80');"></div>
+    <div class="page-inner">
+      <span class="pg-num">06 / 06</span>
+      <span class="label">代表挨拶</span>
+      <div class="rule-line"></div>
+      <p>この度のご案内にあたり、お客様には多大なるご不便をおかけしておりますこと、深くお詫び申し上げます。弊社一同、引き続き誠実な姿勢でお客様の大切なお住まいづくりに携わってまいります。</p>
+      <p>変わらぬご支援とご愛顧を賜りますよう、心よりお願い申し上げます。</p>
+      <div class="sig-block">
+        <span class="sig-meta">令和７年　５月２６日</span>
+        <span class="sig-meta">株式会社こまいホーム</span>
+        <span class="sig-name">代表取締役　船屋 充弘</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- FOOTER -->
+<footer id="footer" aria-label="サイトフッター">
+  <nav class="footer-dots" aria-label="ページナビゲーション">
+    <button class="dot active" data-target="0" aria-label="1ページ目へ"></button>
+    <button class="dot" data-target="1" aria-label="2ページ目へ"></button>
+    <button class="dot" data-target="2" aria-label="3ページ目へ"></button>
+    <button class="dot" data-target="3" aria-label="4ページ目へ"></button>
+    <button class="dot" data-target="4" aria-label="5ページ目へ"></button>
+    <button class="dot" data-target="5" aria-label="6ページ目へ"></button>
+  </nav>
+  <div class="footer-bottom">
+    <a href="#" class="footer-brand">komai home</a>
+    <div class="footer-sep"></div>
+    <button class="footer-pp" id="pp-btn">プライバシーポリシーはこちら</button>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div id="modal">
+    <button id="modal-close" aria-label="閉じる">✕</button>
+    <h3 id="modal-title">プライバシーポリシー</h3>
+    <p>株式会社こまいホーム（以下「弊社」）は、お客様の個人情報の保護を重要な責務と認識し、以下の方針に基づき適切な管理・保護に努めます。</p>
+    <p><strong>個人情報の収集について</strong><br>弊社は、お客様からお問い合わせいただいた際や、資料請求・各種手続きの際に必要な範囲で個人情報をお預かりします。</p>
+    <p><strong>個人情報の利用目的</strong><br>お預かりした個人情報は、弊社サービスのご提供、お問い合わせへの対応、工事・施工に関するご連絡等の目的にのみ使用いたします。</p>
+    <p><strong>第三者への提供</strong><br>法令に基づく場合を除き、お客様の同意なく第三者に個人情報を提供することはございません。</p>
+    <p><strong>安全管理</strong><br>個人情報への不正アクセス、紛失、破壊、改ざん等を防止するため、適切な安全管理措置を講じます。</p>
+    <p><strong>お問い合わせ</strong><br>個人情報に関するお問い合わせは、弊社窓口までお申し付けください。</p>
+    <p style="color: var(--ink-muted); font-size: 0.8rem; margin-top: 2rem;">株式会社こまいホーム</p>
+  </div>
+</div>
+
+<script>
+  const TOTAL = 6;
+  let current = 0;
+  let locked = false;
+
+  const slider = document.getElementById('slider');
+  const dots = document.querySelectorAll('.dot');
+  const progress = document.getElementById('progress');
+  const pages = document.querySelectorAll('.page');
+
+  function goTo(n) {
+    if (n < 0 || n >= TOTAL) return;
+    current = n;
+    slider.style.transform = `translateX(-${current * 100}vw)`;
+    progress.style.width = `${((current + 1) / TOTAL) * 100}%`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+    pages.forEach((p, i) => {
+      if (i === current) setTimeout(() => p.classList.add('visible'), 50);
+      else p.classList.remove('visible');
+    });
+  }
+
+  goTo(0);
+
+  dots.forEach(d => d.addEventListener('click', () => goTo(+d.dataset.target)));
+
+  let wheelTimer = null;
+  window.addEventListener('wheel', e => {
+    e.preventDefault();
+    if (locked) return;
+    locked = true;
+    if (e.deltaY > 0 || e.deltaX > 0) goTo(current + 1);
+    else goTo(current - 1);
+    clearTimeout(wheelTimer);
+    wheelTimer = setTimeout(() => { locked = false; }, 850);
+  }, { passive: false });
+
+  let touchStartX = 0, touchStartY = 0;
+  window.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  window.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) < 30 && Math.abs(dy) < 30) return;
+    if (locked) return;
+    locked = true;
+    if (dx < 0 || dy < 0) goTo(current + 1);
+    else goTo(current - 1);
+    setTimeout(() => { locked = false; }, 850);
+  }, { passive: true });
+
+  window.addEventListener('keydown', e => {
+    if (locked) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      locked = true; goTo(current + 1); setTimeout(() => locked = false, 850);
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      locked = true; goTo(current - 1); setTimeout(() => locked = false, 850);
+    }
+  });
+
+  const overlay = document.getElementById('modal-overlay');
+  document.getElementById('pp-btn').addEventListener('click', () => overlay.classList.add('open'));
+  document.getElementById('modal-close').addEventListener('click', () => overlay.classList.remove('open'));
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
+</script>
+</body>
+</html>
